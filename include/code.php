@@ -1,13 +1,8 @@
-<style>
-    html {
-        font-family: 'Source Sans Pro', sans-serif;
-    }
-</style>
 <?php
     require 'db.php';
 
     // Первая загрузка
-    $pdo = new PDO("mysql:host=localhost;dbname=pineforest_db;charset=utf8", $user, $pass);
+    $pdo = new PDO("mysql:host=localhost;dbname=u1153644_default;charset=utf8", $user, $pass);
     $data = $pdo->prepare("SELECT * FROM source_background_data");
     $data->execute();
 
@@ -22,7 +17,7 @@
     $nav_lables_name = ['Главная', 'Фото', 'Арты'];
 
     function login_db() {
-        $pdo = new PDO("mysql:host=localhost;dbname=pineforest_db;charset=utf8", $user, $pass);
+        $pdo = new PDO("mysql:host=localhost;dbname=u1153644_default;charset=utf8", $user, $pass);
         $mailuid = $_POST['mailuid'];
         $password = $_POST['pwd'];
 
@@ -35,13 +30,13 @@
             $data->bindParam(1, $mailuid, PDO::PARAM_STR);
             $data->bindParam(2, $mailuid, PDO::PARAM_STR);
             $data->execute();
-            
+
             $arr_data = array();
             while ($row = $data->fetch(PDO::FETCH_ASSOC)){
                 $arr_data[count($arr_data)] = $row;
             }
-            
-            
+
+
             if (count($arr_data) < 0) {
                 die('<div style="background-color:white; grid-area:1/1/5/6; margin: auto 0;"><p align="center" style="font-size: 16px; color: gray;">Нет пользователей с таким никнеймом или почтой.</br></br><a href="http://pineart.fo.ua/singin.php">Вернуться назад.</a></p></div>');
                 exit();
@@ -57,7 +52,7 @@
                     $_SESSION['userId'] = $arr_data[0]['idUsers'];
                     $_SESSION['userUid'] = $arr_data[0]['uidUsers'];
 
-                    header("Location: ../Photos.php?login=success");
+                    header("Location: ../Home.php?login=success");
 
                     $content = "User has login";
                     $fp = fopen($_SERVER['DOCUMENT_ROOT'] . "/REGISTER_LOG.txt","a+");
@@ -73,7 +68,7 @@
 
             $pdo = null;
         }
-            
+
     }
 
     function logout_db() {
@@ -88,18 +83,18 @@
     }
 
     function singup_db(){
-        $pdo = new PDO("mysql:host=localhost;dbname=pineforest_db;charset=utf8", $user, $pass);
-        
+        $pdo = new PDO("mysql:host=localhost;dbname=u1153644_default;charset=utf8", $user, $pass);
+
         $username = $_POST['uid'];
         $email = $_POST['mail'];
         $password = $_POST['pwd'];
         $passwordRepeat = $_POST['pwd-repeat'];
-        
+
         if (empty($username) || empty($email) || empty($password) || empty($passwordRepeat)){
             $pdo = null;
             die('<div style="background-color:white; display: flex; justify-content: center; align-items: center; height: 100%;"><p align="center" style="font-size: 16px; color: gray;">Заполните все поля!. </br></br><a href="http://pineart.fo.ua/singin.php">Вернуться на предыдущую страницу</a></p></div>');
             exit();
-        } 
+        }
         else {
             $data = $pdo->prepare("SELECT uidUsers FROM users WHERE uidUsers=?");
             $data->bindParam(1, $username, PDO::PARAM_STR);
@@ -107,7 +102,7 @@
             $arr_data = array();
             while ($row = $data->fetch(PDO::FETCH_ASSOC))
                 $arr_data[count($arr_data)] = $row;
-            
+
             if (count($arr_data) > 0) {
                 $pdo = null;
                 die('<div style="background-color:white;  display: flex; justify-content: center; align-items: center; height: 100%;"><p align="center" style="font-size: 16px; color: gray;">Никнейм уже занят! </br></br><a href="http://pineart.fo.ua/singin.php">Вернуться на предыдущую страницу.</a></p></div>');
@@ -126,17 +121,17 @@
                 exit();
             }
 
-            
-            
+
+
         }
     }
 
     function sql_load($table){
         try {
-            $pdo = new PDO("mysql:host=localhost;dbname=pineforest_db;charset=utf8", $user, $pass);
+            $pdo = new PDO("mysql:host=localhost;dbname=u1153644_default;charset=utf8", $user, $pass);
             $data = $pdo->prepare("SELECT * FROM ".$table);
             $data->execute();
-            
+
             $arr_data = array();
             while ($row = $data->fetch(PDO::FETCH_ASSOC))
                 $arr_data[count($arr_data)] = $row;
@@ -146,10 +141,10 @@
         catch (PDOException $e) {
             // Оставлять логи опасно
             // print "Error!: " . $e->getMessage() . "<br/>";
-            // $file = fopen("logfile.log", "a+"); 
-            // fwrite($file, "Error!: ".$e->getMessage()."\n"); 
-            // fwrite($file, "In file: ".$e->getFile().", line: ".$e->getLine()."\n"); 
-            // fclose($file); 
+            // $file = fopen("logfile.log", "a+");
+            // fwrite($file, "Error!: ".$e->getMessage()."\n");
+            // fwrite($file, "In file: ".$e->getFile().", line: ".$e->getLine()."\n");
+            // fclose($file);
             // return null;
             // die();
         }
@@ -191,7 +186,7 @@
                     </div>
                 </div>
                 <a href="javascript:void(0);" style="display: block;" class="ios_hover">
-                <div style="background-image: url('.$path.$photo_data[$i]['image'].');" class="preview-photo"> 
+                <div style="background-image: url('.$path.$photo_data[$i]['image'].');" class="preview-photo">
                     <button class="preview-button" onclick="showPreviewField('."'".$path.$photo_data[$i]['image']."'".')"></button>
                     <img src="'.$path.$photo_data[$i]['image'].'" width="100%" style="visibility: hidden;" class="preview-photo-img" />
                 </div>
@@ -216,66 +211,14 @@
         }
     }
 
-    function renderSmallPhotoBlock($a, $type){
-        if ($type == "photo") $photo_data = sql_load("source_background_data");
-        if ($type == "art") $photo_data = sql_load("source_art_data");
-        $i = 0; // После заполнения таблиц БД, убрать все это! Заменить k на i.
-        for ($k = 0; $k < $a; $k++){
-            $i = rand(0,count($photo_data)-1);
-            echo '  <div class="small-photo-block">
-                        <div class="photo-block-header">
-                            <div class = "photo-block-header-text">
-                                <img src="images/photo_icon.png" width="22px" height="22px" alt="icon">
-                                <h3>'.$photo_data[$i]['name'].'</h3>
-                                <div class = "author">'.$photo_data[$i]['author'].'</div>
-                                <div class = "date">'.$photo_data[$i]['date'].'</div>
-                            </div>
-                            <div class="photo-block-header-download">
-                                <img src="images/download_icon.png" width="20px" height="22px" alt="icon">
-                            </div>
-                        </div>
-                        <div style="background-image: url(images/backgrounds/'.$photo_data[$i]['image'].');" class="preview-photo">
-                            <img src="images/backgrounds/'.$photo_data[$i]['image'].'" width="100%" style="visibility: hidden;" />
-                        </div>
-                        <div class="hashtag-label">';
-                        hashtagDraw($photo_data[$i]['hashtag'], 2);
-                        echo '</div>
-                        <div class="location-label">
-                            <img src="images/location_icon.png" width="20px" height="20px" alt="icon">
-                            <div class="location-text">'.$photo_data[$i]['location'].'</div>
-                        </div>
-                    </div>';
-        }
-    }
-
     function renderHashtag($a){
         $hashtag_data = sql_load("source_hashtag_data");
         $i = 0; // После заполнения таблиц БД, убрать все это! Заменить k на i.
-        $digits = 0;
-        $times = 0;
         echo '<form action="Search.php" method="post" class="hashtag-form">';
-        echo '<div class="hashtag-line">';
         for ($k = 0; $k < $a; $k++){
             $i = rand(0,count($hashtag_data)-1);
-            $digits = $digits + iconv_strlen($hashtag_data[$i]['name'],'UTF-8');
-            if ((($digits < 27)&&($times == 2))||(($digits < 24)&&($times == 3))||($times <= 1)){
-                echo '<input name="search" style = "background-color: #339b87;" type="submit" value="'.$hashtag_data[$i]['name'].'" class = "hashtag" />';
-                $times++;
-            }
-            else {
-                if (($a - 4) < $k){
-                    $k=$a+1; // для ровности столбца обрубаем конец оставшихся тегов
-                }
-                else {
-                    echo "</div>";
-                    echo '<div class="hashtag-line">';
-                    echo '<input name="search" style = "background-color: #339b87;" type="submit" value="'.$hashtag_data[$i]['name'].'" class = "hashtag" />';
-                    $digits = iconv_strlen($hashtag_data[$i]['name'],'UTF-8');
-                    $times = 1;
-                }
-            }
+            echo '<input name="search" type="submit" value="'.$hashtag_data[$i]['name'].'" class = "hashtag" />';
         }
-        echo "</div>";
         echo '</form>';
     }
 
@@ -298,27 +241,27 @@
 
     function removePicture($key, $id, $type){
         $type_db = "source_background_data";
-        
-        
+
+
         switch ($type) {
             case "photo": $type_db = "source_background_data"; break;
             case "art": $type_db = "source_art_data"; break;
         }
         $data_photos = sql_load($type_db);
-        
+
         if (isset($_SESSION['userId'])){
             if ($data_photos[$id]['author'] == $_SESSION['userUid']) {
-                $pdo = new PDO("mysql:host=localhost;dbname=pineforest_db;charset=utf8", $user, $pass);
+                $pdo = new PDO("mysql:host=localhost;dbname=u1153644_default;charset=utf8", $user, $pass);
                 $user = $data_photos[$id]['author'];
                 $data = $pdo->prepare("SELECT * FROM users WHERE uidUsers=?");
                 $data->bindParam(1, $user, PDO::PARAM_STR);
                 $data->execute();
-                
+
                 $usr_data = array();
                 while ($row = $data->fetch(PDO::FETCH_ASSOC)){
                     $usr_data[count($usr_data)] = $row;
                 }
-                
+
                 if (count($usr_data) < 0) {
                     die('<div style="background-color:white; grid-area:1/1/5/6; margin: auto 0;"><p align="center" style="font-size: 16px; color: gray;">Нет пользователей с таким именем или почтой.</br></br><a href="?">Вернуться назад.</a></p></div>');
                     exit();
@@ -330,9 +273,9 @@
                         exit();
                     }
                     else if($pwdCheck == true) {
-                        $pdo = new PDO("mysql:host=localhost;dbname=pineforest_db;charset=utf8", $user, $pass);
+                        $pdo = new PDO("mysql:host=localhost;dbname=u1153644_default;charset=utf8", $user, $pass);
                         $STH = $pdo->prepare("DELETE FROM ".$type_db." WHERE id =:id");
-                        
+
                         $STH->bindParam(':id', $data_photos[$id]['id']);
                         $STH->execute();
                         $pdo = null;
@@ -362,7 +305,7 @@
             $path = "images/arts/";
             $photo_data = sql_load("source_art_data");
         }
-        
+
         $hashtag_data = sql_load("source_hashtag_data");
         for ($i = 0; $i < (count($photo_data)); $i++){
             $hashtags = explode ("/",$photo_data[$i]['hashtag']);
@@ -387,13 +330,13 @@
                                 </div>
                                 </div>
                                 <a href="javascript:void(0);" style="display: block;" class="ios_hover">
-                                <div style="background-image: url('.$path.$photo_data[$i]['image'].');" class="preview-photo"> 
+                                <div style="background-image: url('.$path.$photo_data[$i]['image'].');" class="preview-photo">
                                     <button class="preview-button" onclick="showPreviewField('."'".$path.$photo_data[$i]['image']."'".')"></button>
                                     <img src="'.$path.$photo_data[$i]['image'].'" width="100%" style="visibility: hidden;" class="preview-photo-img" />
                                 </div>
                                 </a>
                             </div>
-                            
+
                             <div class="vr"></div>
                             <div class = "photo-block-right">
                                 <div class = "photo-block-right-header">
@@ -519,17 +462,17 @@
         // Переменные
         if(isset($_POST['upload-photo-description'])){
             $selectOption = "background";
-        } 
+        }
         if(isset($_POST['upload-art-description'])) {
             $selectOption = "art";
         }
 
         $location = "Неопределенно";
         $hashtags = "1";
-        if (isset($_SESSION['userId'])) 
-            $author = $_SESSION['userUid']; 
-        else 
-            $author = "Unkown"; 
+        if (isset($_SESSION['userId']))
+            $author = $_SESSION['userUid'];
+        else
+            $author = "Unkown";
 
         date_default_timezone_set('UTC');
 
@@ -543,7 +486,7 @@
         //         // Ширина
         //         $latitude['degrees'] = getCoord($exif['GPS']['GPSLatitude'][0]);
         //         $latitude['degrees'] = floor($latitude['degrees']);
-                
+
         //         // Долгота
         //         $longitude['degrees'] = getCoord( $exif['GPS']['GPSLongitude'][0] );
         //         $longitude['degrees'] = floor($longitude['degrees']);
@@ -556,12 +499,12 @@
         //         $location="Неопознано";
         //     }
         // }
- 
+
 
         // Check type
         if (!in_array($_FILES['upload-file']['type'], $types))
             die('<div style="background-color:white; grid-area:1/1/5/6; margin: auto 0;"><p align="center" style="font-size: 16px; color: gray;">Запрещённый тип файла.</br></br><a href="?">Попробовать другой файл?</a></p></div>');
-        
+
         if ($selectOption == "background") {
             if (!in_array(mime_content_type($_FILES['upload-file']['tmp_name']), $types))
                 die('<div style="background-color:white; grid-area:1/1/5/6; margin: auto 0;"><p align="center" style="font-size: 16px; color: gray;">Хорошая попытка. Запрещенный тип файла.</br></br><a href="?">Попробовать другой файл?</a></p></div>');
@@ -574,7 +517,7 @@
 
         // Check size
         if ($_FILES['upload-file']['size'] > $size)
-            die('<div style="background-color:white; grid-area:1/1/5/6; margin: auto 0;"><p align="center" style="font-size: 16px; color: gray;">Слишком большой размер файла.</br></br><a href="?">Попробовать другой файл?</a></p></div>');    
+            die('<div style="background-color:white; grid-area:1/1/5/6; margin: auto 0;"><p align="center" style="font-size: 16px; color: gray;">Слишком большой размер файла.</br></br><a href="?">Попробовать другой файл?</a></p></div>');
 
         if ($selectOption == "background") {
             if (strip_tags($_POST["upload-photo-description"]) == "") {
@@ -606,7 +549,7 @@
                     die('<div style="background-color:white; grid-area:1/1/5/6; margin: auto 0;"><p align="center" style="font-size: 16px; color: gray;">Что-то пошло не так.</br></br><a href="?">Вернуться на страницу загрузки.</a></p></div>');
                 }
                 else {
-                    
+
                 }
                 if (!img_resize($path_background.$_FILES['upload-file']['name'], $path_background."superlow_".$_FILES['upload-file']['name'], 480, 480*$height/$width)){
                     // Лог файл
@@ -618,10 +561,10 @@
                     die('<div style="background-color:white; grid-area:1/1/5/6; margin: auto 0;"><p align="center" style="font-size: 16px; color: gray;">Что-то пошло не так.</br></br><a href="?">Вернуться на страницу загрузки.</a></p></div>');
                 }
                 else {
-                    
+
                 }
-                
-                $pdo = new PDO("mysql:host=localhost;dbname=pineforest_db;charset=utf8", $user, $pass);
+
+                $pdo = new PDO("mysql:host=localhost;dbname=u1153644_default;charset=utf8", $user, $pass);
                 $php = "INSERT INTO `source_background_data` (`id`, `name`, `author`, `date`, `image`, `description`, `location`, `hashtag`) VALUES (NULL,?,?,?,?,?,?,?);";
                 $STH = $pdo->prepare($php);
                 $STH->bindParam(1, strip_tags($_POST["upload-name"]), PDO::PARAM_STR);
@@ -655,7 +598,7 @@
                 die('<div style="background-color:white; grid-area:1/1/5/6; margin: auto 0;"><p align="center" style="font-size: 16px; color: gray;">Что-то пошло не так.</br></br><a href="?">Вернуться на страницу загрузки.</a></p></div>');
             }
             else {
-                $pdo = new PDO("mysql:host=localhost;dbname=pineforest_db;charset=utf8", $user, $pass);
+                $pdo = new PDO("mysql:host=localhost;dbname=u1153644_default;charset=utf8", $user, $pass);
                 $php = "INSERT INTO `source_art_data` (`id`, `name`, `author`, `date`, `image`, `description`, `location`, `hashtag`) VALUES (NULL,?,?,?,?,?,?,?);";
                 $STH = $pdo->prepare($php);
                 $STH->bindParam(1, strip_tags($_POST["upload-name"]), PDO::PARAM_STR);
@@ -673,14 +616,15 @@
     }
 
     if (($_SERVER['REQUEST_METHOD'] == 'POST')&&(isset($_POST['signup-submit']))){
-        singup_db();   
+        singup_db();
     }
 
     if (($_SERVER['REQUEST_METHOD'] == 'POST')&&(isset($_POST['login-submit']))){
-        login_db();   
+        login_db();
     }
 
     if (($_SERVER['REQUEST_METHOD'] == 'POST')&&(isset($_POST['logout-button']))){
-        logout_db();   
+        logout_db();
     }
+
 ?>
