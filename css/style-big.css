@@ -1,0 +1,29 @@
+/* .hashtag-line {
+    display: flex; 
+    flex-wrap: nowrap; 
+    justify-content: left; 
+    width: min-content;
+}
+
+.hashtag-form {
+    width: 100%; 
+    margin-right: 5px;
+    display: flex;
+    flex-wrap: wrap;
+} */
+
+body {
+    display: grid;
+    grid-template: 60px 74px 1fr 100px/ 145px 1fr 1fr 330px 145px;
+}
+
+.big-photo-block {
+    width: 40%;
+    max-width: 600px;
+}
+
+#add-photo-block {
+    width: 40%;
+    max-width: 600px;
+}
+
