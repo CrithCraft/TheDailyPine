@@ -4,7 +4,7 @@
     }
 </style>
 <?php
-    require 'connect/db.php';
+    require 'db.php';
 
     // Первая загрузка
     $pdo = new PDO("mysql:host=localhost;dbname=pineforest_db;charset=utf8", $user, $pass);
