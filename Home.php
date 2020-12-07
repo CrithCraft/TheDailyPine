@@ -1,16 +1,15 @@
 <html>
 <head>
     <title>Главная</title>
-    
-    <!-- <meta http-equiv="Content-Security-Policy" content="script-src 'self'"> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <!-- Иконка для избранного -->
     <link rel="apple-touch-icon" href="images/app_icon.png"/>
-
+    <!-- Подключаем css загружем шрифты -->
     <link rel="stylesheet" media="(max-width: 800px)" href="css/style-mobile.css">
     <link rel="stylesheet" media="(min-width: 1200px)" href="css/style.css">
     <link rel='stylesheet' media='screen and (min-width: 800px) and (max-width: 1200px)' href='css/style-mini.css' /> 
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700&display=swap" rel="stylesheet">
+    <!-- Дополнительные стили для больших экранов -->
     <style type="text/css">
         html {
             background-image: url(/images/tumb_background.jpg);
@@ -79,10 +78,8 @@
             align-items: center;
         }
     </style>
+    <!-- Аддаптация под мобильные устройства -->
     <style media="(max-width: 800px)">
-        html {
-            /* background-position: center; */
-        }
         body {
             grid-template: 60px 200px 1fr 130px/ 0px 1fr 1fr 330px 0px;
         }
@@ -96,11 +93,12 @@
     </style>
 </head>
 <body>
+    <!-- Подключаем главный php и js файлы -->
     <?php require ($_SERVER["DOCUMENT_ROOT"]."/include/code.php"); ?>
     <script src="/include/code.js"></script>
-    
-    <!-- <div class="shadow"></div> -->
+    <!-- шапка -->
     <header>
+        <!-- навигация -->
         <nav>
             <img src="images/logo.png" width="36px" height="18px" alt="icon">
             <?php
@@ -108,6 +106,7 @@
                     echo "<li><a href='",$nav_lables[$i],"'>",$nav_lables_name[$i],"</a></li>";
             ?>
         </nav>
+        <!-- поле входа -->
         <div class="user-label">
             <form action="<?php if (isset($_SESSION['userId'])) echo "#"; else echo "singin.php"; ?>" style="margin: auto 0px;">
                 <button type="submit" class="login-button" name="login-button"> 
@@ -123,13 +122,15 @@
                     </form>
                 ';
             ?>
-      </div>
+    </div>
     </header>
+    <!-- Эффект размытия шапки -->
     <div class="blur-header"></div>
-
+    <!-- Приветствие -->
     <div class="author">
         <div class="author-name">Свобода поиска фото-ресурсов уже сегодня!</div>
     </div>
+    <!-- Основной контент -->
     <article>
         <h1>Одно правило. Множество возможностей.</h1>
         <div class="text-gray">
@@ -151,7 +152,7 @@
         сильного давления со стороны ОГЭ, и недостатка свободного времени, я решил покинуть Samsung IT, о чем немного сожалею. Сейчас я пытаюсь наверстать упущенное и самостоятельно обучится разработке Android приложений.</div>
         </div>
     </article>
-
+    <!-- Подвал -->
     <footer>
         <hr>
         <div class="footer-title">Photo by Samuel Ferrara on Unsplash</div>
