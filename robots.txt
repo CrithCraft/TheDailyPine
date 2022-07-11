@@ -1,0 +1,10 @@
+# Не сканировать директорию nogooglebot и все его подкаталоги
+User-agent: Googlebot
+Disallow: /nogooglebot/
+
+# Сканировать все остальные директории
+User-agent: *
+Allow: /
+
+# Карта сайта
+Sitemap: http://www.pineforest.fo.ua/sitemap.xml
