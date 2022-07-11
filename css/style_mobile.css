@@ -1,0 +1,125 @@
+body {
+    grid-template: 50px 0px 1fr min-content min-content min-content/ 70px 300px 1fr;
+}
+
+.logout-button {
+    display: none;
+}
+
+
+.user-label {
+    width: unset;
+}
+
+article {
+    padding: 0px 25px;
+}
+
+#title h1 {
+    font-size: 25px;
+    padding: 8px 0px;
+}
+
+.title-items {
+    height: unset;
+}
+
+#title {
+    height: min-content;
+}
+
+.title-icons {
+    align-items: center;
+    justify-content: flex-end;
+}
+
+#page-title {
+    display: flex;
+    align-items: center;
+}
+
+#user-page .content {
+    flex-wrap: wrap;
+    padding: 0px 25px;
+}
+
+#user-page .content * {
+    width: 100% !important;
+    padding-right: 0px !important;
+}
+
+.title {
+    height: min-content;
+    padding: 0px 25px !important;
+    padding-bottom: 16px !important;
+}
+
+.title h1 {
+    padding-bottom: 4px;
+    font-size: 25px;
+}
+
+#add-photo-area *{
+    width: 100% !important;
+    padding-right: 0px !important;
+}
+
+#add-photo-area {
+    flex-wrap: wrap;
+    padding: 25px;
+}
+
+#add-photo-area .label {
+    padding-left: 0px;
+}
+
+#add-photo-area .label * {
+    padding-left: 0px;
+}
+
+#add-photo-area form {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#add-photo-area form * {
+    width: 100% !important;
+}
+
+.preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain !important;
+}
+
+#articles {
+    justify-content: space-around;
+}
+
+#second-page .area {
+    border-radius: unset;
+    margin: unset;
+}
+
+#tumb {
+    display: none;
+}
+
+#message-box {
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    margin: 0px;
+    border-radius: 0px;
+}
+
+.second-user-image-area {
+    width: 100%;
+    border-radius: unset;
+}
+
+#second-user-image {
+    height: 370px;
+    object-fit: fill;
+}

@@ -1,0 +1,13 @@
+DirectoryIndex Home.php
+
+RewriteEngine on
+
+RewriteRule ^api?$ api.php
+RewriteRule ^home?$ Home.php
+RewriteRule ^signup?$ singin.php
+RewriteRule ^policy?$ policy.php
+RewriteRule ^cookie?$ cookie.php
+RewriteRule ^about?$ About.php
+RewriteRule ^sorry?$ Sorry.html
+
+ErrorDocument 404 /Sorry.html
